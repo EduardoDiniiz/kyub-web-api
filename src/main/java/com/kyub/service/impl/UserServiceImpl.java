@@ -20,27 +20,34 @@ public class UserServiceImpl implements UserService {
 	private UsuarioRepository usuarioRepository;
 
 	@Override
-	public Usuario FindById(long id) {
+	public Usuario findById(Long id) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return this.usuarioRepository.findById(id).orElseThrow(() -> new Exception("Não encontrado registros"));
 	}
 
 	@Override
-	public void Update(long id, Usuario userUpdate) {
-		// TODO Auto-generated method stub
-
+	public void update(Long id, Usuario userUpdate) {
+		userUpdate.setId(id);
+		this.usuarioRepository.save(userUpdate);
 	}
 
 	@Override
-	public Usuario Save(Usuario newUser) {
+	public Usuario save(Usuario newUser) {
 		newUser.setDataCadastro(LocalDateTime.now());
 		return this.usuarioRepository.save(newUser);
 	}
 
 	@Override
-	public List<Usuario> FindAll() {
+	public List<Usuario> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void delete(Long id) throws Exception {
+		Usuario usuario = this.findById(id);
+		this.usuarioRepository.delete(usuario);
+
 	}
 
 }

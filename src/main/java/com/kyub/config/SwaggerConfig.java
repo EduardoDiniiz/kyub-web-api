@@ -18,59 +18,53 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @EnableWebMvc
-public class SwaggerConfig implements WebMvcConfigurer{
- 
+public class SwaggerConfig implements WebMvcConfigurer {
+
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-	    registry.addRedirectViewController("swagger-resources/configuration/ui", "swagger-resources/configuration/ui");
-	    registry.addRedirectViewController("swagger-resources/configuration/security", "swagger-resources/configuration/security");
-	    registry.addRedirectViewController("swagger-resources", "/swagger-resources");
+		registry.addRedirectViewController("swagger-resources/configuration/ui", "swagger-resources/configuration/ui");
+		registry.addRedirectViewController("swagger-resources/configuration/security",
+				"swagger-resources/configuration/security");
+		registry.addRedirectViewController("swagger-resources", "/swagger-resources");
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	    registry.addResourceHandler("swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
-	    registry.addResourceHandler("webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		registry.addResourceHandler("swagger-ui.html**")
+				.addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+		registry.addResourceHandler("webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
-	
+
 	@Bean
 	public Docket detalheApi() {
- 
+
 		Docket docket = new Docket(DocumentationType.SWAGGER_2);
- 
-		docket
-		.select()
-		.apis(RequestHandlerSelectors.basePackage("com.kyub"))
-		.paths(PathSelectors.any())
-		.build()
-		.apiInfo(this.informacoesApi().build());
- 
+
+		docket.select().apis(RequestHandlerSelectors.basePackage("com.kyub")).paths(PathSelectors.any()).build()
+				.apiInfo(this.informacoesApi().build());
+
 		return docket;
 	}
- 
+
 	private ApiInfoBuilder informacoesApi() {
- 
+
 		ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
- 
-		
-		apiInfoBuilder.title("Api- Ecommerce");
-		apiInfoBuilder.description("Api para realização de configurações basicas dentro de um E-commerce");
+
+		apiInfoBuilder.title("Kyub");
+		apiInfoBuilder.description("Operações do projeto KYUB");
 		apiInfoBuilder.version("1.0");
 		apiInfoBuilder.termsOfServiceUrl("Termo de uso: Deve ser usada para estudos.");
-		apiInfoBuilder.license("Licença - Open Source");
+		apiInfoBuilder.license("Licenças reservadas do projeto KYUB");
 		apiInfoBuilder.licenseUrl(null);
 		apiInfoBuilder.contact(this.contato());
- 
+
 		return apiInfoBuilder;
- 
+
 	}
+
 	private Contact contato() {
- 
-		return new Contact(
-				"Rafael Castro, Alvaro Philipe",
-				"https://github.com/RafaelMatheus/Veste-bem.git", 
-				"rafaelmatheusdecastro@hotmail.com.br");
+
+		return new Contact("Rafael Castro, Eduardo Diniz, Fabiano, Gustavo Lins", null, null);
 	}
-    
 
 }
