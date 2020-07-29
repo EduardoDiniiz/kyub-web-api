@@ -1,6 +1,6 @@
 package com.kyub.model.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +37,6 @@ public class Usuario {
     private String senha;
 
     @Column(name = "data_cadastro", nullable = false)
-    private Date dataCadastro;
+    private LocalDateTime dataCadastro;
 
 }
