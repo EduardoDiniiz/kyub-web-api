@@ -29,7 +29,7 @@ public class UsuarioController {
 		UsuarioDto newUsuario = userService.save(user);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUsuario.getId())
 				.toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).body(newUsuario);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
