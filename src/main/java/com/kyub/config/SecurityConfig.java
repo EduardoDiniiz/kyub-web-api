@@ -1,6 +1,7 @@
 package com.kyub.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 
-	private static final String[] PUBLIC_MATCHERS_POST = { "/api/usuarios/**" };
+	private static final String[] PUBLIC_MATCHERS_POST = { "/api/usuarios/**" , "/login"};
 	private static final String[] PUBLIC_MATCHERS = { "/webjars/**", "/swagger-ui.html/**", "/null/**",
 			"/swagger-resources/**", "/v2/**", "/h2-console/**", "/swagger-ui.html/**", "/swagger-resource/**" };
 
@@ -33,6 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+		auth.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	}
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

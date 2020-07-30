@@ -37,6 +37,5 @@ public class Usuario {
     private String senha;
 
     @Column(name = "data_cadastro", nullable = false)
-    private LocalDateTime dataCadastro;
-
+    private LocalDateTime dataCadastro;	
 }

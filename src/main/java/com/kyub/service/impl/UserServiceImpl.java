@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kyub.mapper.UsuarioMapper;
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
 
 	@Override
 	public UsuarioDto findById(Long id) throws Exception {
@@ -40,6 +44,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UsuarioDto save(UsuarioDto newUser) {
 		Usuario user = this.userMapper.toModel(newUser);
+		user.setSenha(bcrypt.encode(newUser.getSenha()));
 		user.setDataCadastro(LocalDateTime.now());
 		return this.userMapper.toDto(this.usuarioRepository.save(user));
 	}
