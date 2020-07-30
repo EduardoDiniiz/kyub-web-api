@@ -3,11 +3,12 @@ package com.kyub.service;
 import java.util.List;
 
 import com.kyub.model.entity.Usuario;
+import com.kyub.model.entity.dto.UsuarioDto;
 
 public interface UserService {
-	Usuario findById(Long id) throws Exception;
-	void update (Long id, Usuario userUpdate);
-	Usuario save(Usuario newUser);
-	List <Usuario> findAll();
+	UsuarioDto findById(Long id) throws Exception;
+	void update (Long id, UsuarioDto userUpdate);
+	UsuarioDto save(UsuarioDto newUser);
+	List <UsuarioDto> findAll();
 	void delete(Long id) throws Exception;
 }

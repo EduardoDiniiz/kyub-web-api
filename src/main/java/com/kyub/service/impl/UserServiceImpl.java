@@ -6,47 +6,54 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kyub.mapper.UsuarioMapper;
 import com.kyub.model.entity.Usuario;
+import com.kyub.model.entity.dto.UsuarioDto;
 import com.kyub.repository.UsuarioRepository;
 import com.kyub.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-//	@Autowired
-//	private UsuarioMapper userMapper;
+	@Autowired
+	private UsuarioMapper userMapper;
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Override
-	public Usuario findById(Long id) throws Exception {
+	public UsuarioDto findById(Long id) throws Exception {
 		// TODO Auto-generated method stub
-		return this.usuarioRepository.findById(id).orElseThrow(() -> new Exception("Não encontrado registros"));
+		Usuario usuario = this.usuarioRepository.findById(id)
+				.orElseThrow(() -> new Exception("Não encontrado registros"));
+		UsuarioDto dto = this.userMapper.toDto(usuario);
+		return dto;
 	}
 
 	@Override
-	public void update(Long id, Usuario userUpdate) {
+	public void update(Long id, UsuarioDto userUpdate) {
+		Usuario user = this.userMapper.toModel(userUpdate);
 		userUpdate.setId(id);
-		this.usuarioRepository.save(userUpdate);
+		this.usuarioRepository.save(user);
 	}
 
 	@Override
-	public Usuario save(Usuario newUser) {
-		newUser.setDataCadastro(LocalDateTime.now());
-		return this.usuarioRepository.save(newUser);
+	public UsuarioDto save(UsuarioDto newUser) {
+		Usuario user = this.userMapper.toModel(newUser);
+		user.setDataCadastro(LocalDateTime.now());
+		return this.userMapper.toDto(this.usuarioRepository.save(user));
 	}
 
 	@Override
-	public List<Usuario> findAll() {
+	public List<UsuarioDto> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void delete(Long id) throws Exception {
-		Usuario usuario = this.findById(id);
-		this.usuarioRepository.delete(usuario);
+		UsuarioDto usuario = this.findById(id);
+		this.usuarioRepository.delete(this.userMapper.toModel(usuario));
 
 	}
 

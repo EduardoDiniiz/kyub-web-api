@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  kyub-web-api:
+    image: kyub-web-api
+    build: .
+    ports:
+      - 8080
